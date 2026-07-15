@@ -1,0 +1,61 @@
+{% extends 'hilal/base.html' %}
+{% load static %}
+{% block title %}Dashboard | Al-Hilal{% endblock %}
+{% block extra_head %}
+<style>
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(2, 200px);
+  gap: 1.5rem;
+  padding: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.bento-box {
+  background-color: rgba(255, 255, 255, 0.10);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.bento-box h2,
+.bento-box h3 {
+  margin-top: 0;
+  color: #f8fbff;
+}
+.bento-box p {
+  color: rgba(255,255,255,0.84);
+}
+.bento-box img {
+  width: 100%;
+  max-width: 100%;
+  border-radius: 18px;
+  display: block;
+}
+@media (max-width: 768px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+{% endblock %}
+{% block content %}
+<div class="bento-grid">
+    <div class="bento-box box-1">
+        <h2>Prayer and Moon Overview</h2>
+        <p>This dashboard gives a quick look at important dates, prayers, and timeline highlights for the current lunar cycle.</p>
+    </div>
+    <div class="bento-box box-2">
+        <img src="{% static 'Image1.png' %}" alt="Moon phase illustration">
+    </div>
+    <div class="bento-box box-3">
+        <h3>Daily Reminder</h3>
+        <p>Keep your prayer times, moon sighting, and calendar observations aligned with local time.</p>
+    </div>
+    <div class="bento-box box-4">
+        <h3>Upcoming Events</h3>
+        <p>Check the calendar for the next major Islamic dates and crescent sighting windows.</p>
+    </div>
+</div>
+{% endblock %}

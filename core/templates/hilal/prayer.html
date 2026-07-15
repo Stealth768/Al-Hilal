@@ -1,0 +1,16 @@
+{% extends 'hilal/base.html' %}
+{% load static %}
+{% block title %}Prayer Times | Al-Hilal{% endblock %}
+{% block content %}
+<h2>Prayer Times and Crescent Guidance</h2>
+<p>Prayer times follow the rhythm of the day and are connected to the moon-based Islamic calendar. Keep this page open so the site stays synchronized with your device's local time.</p>
+<div style="display: grid; gap: 1.5rem; max-width: 900px; margin: 1.5rem auto 0;">
+    <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
+        <iframe id="g2hFrame" title="islamic-calendar" style="width: 250px; height: 312px; border: 1px solid #ddd;" scrolling="no" src="https://www.islamicfinder.org/islamic-calendar/widgetGregorian?type=Gregorian"></iframe>
+        <iframe id="iframe" title="prayerWidget" class="widget-m-top" style="width: 250px; height: 358px; border: 1px solid #ddd;" scrolling="no" src="https://www.islamicfinder.org/prayer-widget/1261481/hanfi/5/0/15/15"></iframe>
+    </div>
+    <div style="max-width: 700px; margin: 0 auto;">
+        <img src="{% static 'Image1.png' %}" alt="Moon Phases Diagram">
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,286 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Al-Hilal{% endblock %}</title>
+    <style>
+        :root {
+            color-scheme: dark;
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            color: #eef2ff;
+            background-color: #0b1626;
+        }
+        * {
+            box-sizing: border-box;
+        }
+        html, body {
+            margin: 0;
+            min-height: 100%;
+        }
+        body {
+            line-height: 1.5;
+            background-image: linear-gradient(180deg, rgba(8, 18, 34, 0.88), rgba(10, 22, 40, 0.95)),
+              url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #eef2ff;
+        }
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(18px);
+            background: rgba(7, 13, 25, 0.92);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+        }
+        .topbar-message {
+            width: 100%;
+            padding: 0.85rem 1.25rem 0.45rem;
+            text-align: center;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #e0f2fe;
+            background: rgba(3, 10, 24, 0.95);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .topbar-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.85rem;
+            padding: 1rem 1.25rem;
+        }
+        .site-clock {
+            flex: 1 1 240px;
+            min-width: 240px;
+            padding: 1rem 1.1rem;
+            border-radius: 18px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
+            box-shadow: 0 16px 32px rgba(0,0,0,0.2);
+        }
+        .site-clock .label {
+            font-size: 0.85rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.72);
+            margin-bottom: 0.35rem;
+        }
+        .site-clock .time {
+            font-size: 1.55rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin: 0;
+        }
+        .site-clock .date,
+        .site-clock .zone {
+            font-size: 0.86rem;
+            color: rgba(255,255,255,0.78);
+            margin-top: 0.35rem;
+        }
+        .site-clock .zone {
+            color: rgba(255,255,255,0.64);
+        }
+        .nav-links {
+            display: flex;
+            flex: 2 1 420px;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: flex-end;
+        }
+        .nav-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.9rem 1.2rem;
+            border-radius: 999px;
+            text-decoration: none;
+            color: #f8fcff;
+            font-size: 0.95rem;
+            font-weight: 600;
+            background: rgba(255,255,255,0.05);
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+        .nav-links a:hover,
+        .nav-links a.active {
+            background: rgba(255,255,255,0.14);
+            transform: translateY(-1px);
+        }
+        .page-shell {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.25rem 3rem;
+        }
+        .hero {
+            text-align: center;
+            padding: 2.2rem 0 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .hero h1 {
+            margin: 0;
+            font-size: clamp(2.7rem, 5vw, 4.25rem);
+            letter-spacing: -0.04em;
+            line-height: 1.03;
+        }
+        .hero p {
+            margin: 1rem auto 0;
+            max-width: 760px;
+            font-size: 1.05rem;
+            color: rgba(255,255,255,0.76);
+            line-height: 1.8;
+        }
+        .page-content {
+            margin-top: 1.75rem;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px;
+            padding: 1.75rem;
+            box-shadow: 0 20px 60px rgba(2, 8, 20, 0.2);
+            backdrop-filter: blur(18px);
+        }
+        .page-content h2,
+        .page-content h3 {
+            color: #f7fbff;
+        }
+        .page-content a {
+            color: #95c6ff;
+        }
+        .page-content table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .page-content th,
+        .page-content td {
+            padding: 0.95rem 0.9rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            color: rgba(255,255,255,0.88);
+        }
+        .page-content th {
+            text-align: left;
+            color: #eef2ff;
+            font-weight: 700;
+        }
+        .page-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 14px;
+            display: block;
+            margin: 1.3rem auto 0;
+        }
+        .page-content p {
+            color: rgba(255,255,255,0.86);
+        }
+        .page-content .section-block {
+            margin-top: 1.5rem;
+        }
+        @media (max-width: 860px) {
+            .topbar-inner {
+                justify-content: center;
+                text-align: center;
+            }
+            .nav-links {
+                justify-content: center;
+            }
+            .site-clock {
+                width: 100%;
+                min-width: initial;
+            }
+        }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <header class="topbar">
+    
+        <section class="hero">
+            <h1>لا إله إلا الله</h1>
+            <p>(There is no god but Allah)</p>
+        </section>
+
+
+        <div class="topbar-inner">
+            <div class="site-clock" aria-label="Local clock">
+                <div class="label">Local time</div>
+                <div id="siteClockTime" class="time">00:00:00</div>
+                <div id="siteClockDate" class="date">Loading date…</div>
+                <div id="siteClockZone" class="zone">Delhi · Asia/Kolkata</div>
+            </div>
+            <nav class="nav-links" aria-label="Site navigation">
+                <a href="{% url 'index' %}">Home</a>
+                <a href="{% url 'dashboard' %}">Dashboard</a>
+                <a href="{% url 'calendar' %}">Calendar</a>
+                <a href="{% url 'prayer' %}">Prayer Times</a>
+                <a href="{% url 'hilal' %}">Hilal</a>
+                <a href="{% url 'about' %}">About</a>
+            </nav>
+        </div>
+    </header>
+    <div class=hero>
+    <p>Al-Hilal brings Islam's lunar insights, prayer information, and important calendar guidance into a single, easy-to-use site.</p>
+    </div>
+    <main class="page-shell">
+        <section class="page-content">
+            {% block content %}{% endblock %}
+        </section>
+    </main>
+    <script>
+        (function() {
+            var defaultTimeZone = 'Asia/Kolkata';
+            var resolvedTz = defaultTimeZone;
+            var locationLabel = 'Delhi';
+            try {
+                var opts = Intl.DateTimeFormat().resolvedOptions();
+                if (opts && opts.timeZone) {
+                    resolvedTz = opts.timeZone || defaultTimeZone;
+                }
+            } catch (e) {
+                resolvedTz = defaultTimeZone;
+            }
+            if (resolvedTz !== defaultTimeZone) {
+                var parts = resolvedTz.split('/');
+                locationLabel = parts.pop().replace(/_/g, ' ');
+            }
+            function formatTime(date) {
+                return new Intl.DateTimeFormat('en-US', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: false,
+                    timeZone: resolvedTz
+                }).format(date);
+            }
+            function formatDate(date) {
+                return new Intl.DateTimeFormat('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    timeZone: resolvedTz
+                }).format(date);
+            }
+            function updateClock() {
+                var now = new Date();
+                var timeEl = document.getElementById('siteClockTime');
+                var dateEl = document.getElementById('siteClockDate');
+                var zoneEl = document.getElementById('siteClockZone');
+                if (!timeEl || !dateEl || !zoneEl) return;
+                timeEl.textContent = formatTime(now);
+                dateEl.textContent = formatDate(now);
+                zoneEl.textContent = locationLabel + ' · ' + resolvedTz;
+            }
+            updateClock();
+            window.setInterval(updateClock, 1000);
+        })();
+    </script>
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

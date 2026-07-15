@@ -1,0 +1,130 @@
+{% extends 'hilal/base.html' %}
+{% block title %}Hilal | Al-Hilal{% endblock %}
+{% block extra_head %}
+<style>
+    .year-selection {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 0.75rem;
+        margin-top: 1.75rem;
+        background: rgba(255,255,255,0.08);
+        padding: 1rem 1.1rem;
+        border-radius: 18px;
+        border: 1px solid rgba(255,255,255,0.12);
+    }
+    .year-selection label {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #fff;
+    }
+    .year-selection select {
+        min-width: 120px;
+        padding: 0.7rem 0.9rem;
+        border-radius: 12px;
+        border: 1px solid rgba(255,255,255,0.14);
+        background: rgba(255,255,255,0.08);
+        color: #fff;
+    }
+    .year-selection button {
+        min-width: 150px;
+        border: none;
+        border-radius: 12px;
+        background: #2b6df6;
+        color: #fff;
+        padding: 0.85rem 1rem;
+        cursor: pointer;
+        font-weight: 700;
+    }
+    .year-selection button:hover {
+        background: #1d5bd0;
+    }
+    .hilal-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5rem;
+    }
+    .hilal-table th,
+    .hilal-table td {
+        padding: 1rem 0.9rem;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        color: rgba(255,255,255,0.88);
+    }
+    .hilal-table th {
+        color: #fff;
+        font-weight: 700;
+        background: rgba(255,255,255,0.04);
+    }
+    .hilal-table a {
+        color: #95c6ff;
+        text-decoration: none;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<h2>Significant Moon Events and Islamic Dates</h2>
+<p>Choose a year to view expected moon sighting and calendar related events in the Islamic year. The table below is built from our own milestone data rather than an external widget.</p>
+<div class="year-selection">
+    <label for="year">Select Year:</label>
+    <select class="form-select" id="year" name="year">
+        {% for y in available_years %}
+            <option value="{{ y }}" {% if y == selected_year %}selected{% endif %}>{{ y }}</option>
+        {% endfor %}
+    </select>
+    <button id="openCalendar" type="button">Open Calendar</button>
+</div>
+<div style="margin-top:1.75rem; overflow-x:auto;">
+    <table class="hilal-table">
+        <thead>
+            <tr>
+                <th>Event</th>
+                <th>Expected Date</th>
+                <th>Visibility</th>
+                <th>Links</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for milestone in milestones %}
+            <tr>
+                <td>{{ milestone.name }}</td>
+                <td>{{ milestone.date }}</td>
+                <td>
+                    {% if milestone.is_visible %}
+                        <span style="color: #98f5a7; font-weight: 700;">✔ Visible (Grade {{ milestone.grade }})</span>
+                    {% else %}
+                        <span style="color: #ffb3b3; font-weight: 700;">✖ Not Visible (Grade {{ milestone.grade }})</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ milestone.mooncalc_url }}" target="_blank">🌙 Moon Track</a><br>
+                    <a href="{{ milestone.suncalc_url }}" target="_blank">☀️ Sun Track</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+{% block extra_scripts %}
+<script>
+    var MILESTONES = {{ milestones_json|safe }} || [];
+    var SELECTED_YEAR = {{ selected_year|default:2026 }};
+    function persistAndReload(year){
+        try{ localStorage.setItem('selectedYear', String(year)); localStorage.setItem('milestones_'+String(year), JSON.stringify(MILESTONES)); }catch(e){ console.warn('localStorage unavailable', e); }
+        var url = new URL(window.location.href);
+        url.searchParams.set('year', String(year));
+        window.location.href = url.toString();
+    }
+    document.getElementById('year').addEventListener('change', function(e){
+        var y = parseInt(e.target.value, 10);
+        if (!isNaN(y)) persistAndReload(y);
+    });
+    document.getElementById('openCalendar').addEventListener('click', function(){
+        var y = parseInt(document.getElementById('year').value, 10);
+        try{ localStorage.setItem('selectedYear', String(y)); localStorage.setItem('milestones_'+String(y), JSON.stringify(MILESTONES)); }catch(e){ console.warn('localStorage unavailable', e); }
+        window.location.href = '{% url "calendar" %}?year=' + y;
+    });
+    try{ localStorage.setItem('selectedYear', String(SELECTED_YEAR)); localStorage.setItem('milestones_'+String(SELECTED_YEAR), JSON.stringify(MILESTONES)); }catch(e){}
+</script>
+{% endblock %}

@@ -1,0 +1,256 @@
+{% extends 'hilal/base.html' %}
+{% block title %}Calendar | Al-Hilal{% endblock %}
+{% block extra_head %}
+<style>
+    .container { display: grid; grid-template-columns: 1fr 320px; gap: 1.5rem; max-width: 1200px; margin: 0 auto; }
+    .calendar-card { background: rgba(255,255,255,0.08); border-radius: 20px; padding: 1.25rem; box-shadow: 0 20px 40px rgba(0,0,0,0.20); border: 1px solid rgba(255,255,255,0.12); }
+    .sidebar { background: linear-gradient(180deg,#2b6df6,#3aa0ff); color: #fff; border-radius: 20px; padding: 1.25rem; box-shadow: 0 20px 40px rgba(0,0,0,0.20); }
+    .month-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; gap: 0.75rem; }
+    .month-title { font-size:1.25rem; font-weight:700; }
+    .nav-btn { background: rgba(255,255,255,0.12); border:0; color:#fff; font-weight:700; font-size:1rem; cursor:pointer; border-radius: 12px; padding: 0.75rem 1rem; }
+    .grid { display:grid; grid-template-columns: repeat(7, 1fr); gap:10px; }
+    .day-name { text-align:center; font-size:0.82rem; color:rgba(255,255,255,0.82); }
+    .date-cell { background: rgba(255,255,255,0.10); border-radius: 16px; padding: 14px; min-height: 90px; display:flex; flex-direction:column; justify-content:space-between; cursor:pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .date-cell:hover { transform: translateY(-2px); box-shadow: 0 18px 40px rgba(0,0,0,0.16); }
+    .date-num { font-weight:700; color:#fff; }
+    .date-sub { font-size:0.82rem; color:rgba(255,255,255,0.72); margin-top: 0.5rem; }
+    .selected { outline: 3px solid rgba(255,255,255,0.28); }
+    .sidebar .info { margin-top:1rem; background:rgba(255,255,255,0.12); padding:0.95rem; border-radius:16px; }
+    .small-month { text-align:center; color:rgba(255,255,255,0.9); margin-top:1rem; }
+    .sidebar a { color:#fff; text-decoration:none; }
+    .sidebar a:hover { text-decoration: underline; }
+    @media (max-width:900px){ .container{ grid-template-columns: 1fr } .sidebar{ order:2 } }
+</style>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="calendar-card">
+        <div class="month-header">
+            <button id="prev" class="nav-btn" type="button">◀</button>
+            <div class="month-title" id="monthTitle">Month Year</div>
+            <button id="next" class="nav-btn" type="button">▶</button>
+        </div>
+        <div class="grid" id="weekdayNames">
+            <div class="day-name">Sun</div>
+            <div class="day-name">Mon</div>
+            <div class="day-name">Tue</div>
+            <div class="day-name">Wed</div>
+            <div class="day-name">Thu</div>
+            <div class="day-name">Fri</div>
+            <div class="day-name">Sat</div>
+        </div>
+        <div class="grid" id="datesGrid" style="margin-top:12px"></div>
+    </div>
+    <div class="sidebar">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap: 0.75rem;">
+            <div style="font-size:1.15rem; font-weight:700">Calendar</div>
+            <div style="font-size:0.95rem; opacity:0.9;">Dual: Gregorian / Hijri</div>
+        </div>
+        <div class="info" id="infoBox">
+            <div style="font-weight:700" id="gDate">Select a Gregorian date</div>
+            <div id="hDate" style="margin-top:0.75rem;">Hijri: -</div>
+            <div id="spanInfo" style="margin-top:0.75rem; font-size:0.95rem; opacity:0.92;">Span: -</div>
+        </div>
+        <div class="small-month" id="miniMonth"></div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_scripts %}
+<script>
+// Helpers: Gregorian <-> Julian Day
+function gregorianToJD(y,m,d){
+    var a = Math.floor((14 - m)/12);
+    var y2 = y + 4800 - a;
+    var m2 = m + 12*a - 3;
+    var jd = d + Math.floor((153*m2 + 2)/5) + 365*y2 + Math.floor(y2/4) - Math.floor(y2/100) + Math.floor(y2/400) - 32045;
+    return jd;
+}
+function jdToGregorian(jd){
+    var a = jd + 32044;
+    var b = Math.floor((4*a + 3)/146097);
+    var c = a - Math.floor((146097*b)/4);
+    var d = Math.floor((4*c + 3)/1461);
+    var e = c - Math.floor(1461*d/4);
+    var m = Math.floor((5*e + 2)/153);
+    var day = e - Math.floor((153*m+2)/5) + 1;
+    var month = m + 3 - 12*Math.floor(m/10);
+    var year = 100*b + d - 4800 + Math.floor(m/10);
+    return {y: year, m: month, d: day};
+}
+
+var ISLAMIC_EPOCH = 1948439.5;
+function islamicToJD(year, month, day){
+    return day + Math.ceil(29.5*(month-1)) + (year-1)*354 + Math.floor((3 + 11*year)/30) + ISLAMIC_EPOCH - 1;
+}
+function jdToIslamic(jd){
+    var jd0 = Math.floor(jd) + 0.5;
+    var days = jd0 - ISLAMIC_EPOCH;
+    var year = Math.floor((30*days + 10646)/10631);
+    var month = Math.min(12, Math.ceil((jd0 - (29 + islamicToJD(year,1,1)))/29.5) + 1);
+    var day = Math.floor(jd0 - islamicToJD(year, month, 1) + 1);
+    return {y: year, m: month, d: day};
+}
+function formatGregorian(y,m,d){
+    var date = new Date(y, m-1, d);
+    return date.toDateString();
+}
+function formatHijri(h){
+    var months = ['Muharram','Safar','Rabi\' al-awwal','Rabi\' al-thani','Jumada al-awwal','Jumada al-thani','Rajab','Sha\'ban','Ramadan','Shawwal','Dhu al-Qidah','Dhu al-Hijjah'];
+    return h.d + ' ' + months[h.m-1] + ' ' + h.y + ' AH';
+}
+function getQueryParam(name){
+    var params = new URLSearchParams(window.location.search);
+    return params.get(name);
+}
+var SERVER_MILESTONES = null;
+var SERVER_SELECTED_YEAR = null;
+var SERVER_HIJRI_MAP = null;
+try{
+    SERVER_MILESTONES = {{ milestones_json|default:"null"|safe }};
+    SERVER_HIJRI_MAP = {{ hijri_calendar_json|default:"null"|safe }};
+    SERVER_SELECTED_YEAR = {% if selected_year is not None %}{{ selected_year }}{% else %}null{% endif %};
+} catch(e){ }
+var HIJRI_MONTHS = ['Muharram','Safar','Rabi\' al-awwal','Rabi\' al-thani','Jumada al-awwal','Jumada al-thani','Rajab','Sha\'ban','Ramadan','Shawwal','Dhu al-Qidah','Dhu al-Hijjah'];
+function getHijriObject(dateStr, year, month, day){
+    if(SERVER_HIJRI_MAP && SERVER_HIJRI_MAP[dateStr]){
+        return SERVER_HIJRI_MAP[dateStr];
+    }
+    var jd = gregorianToJD(year, month, day);
+    return jdToIslamic(jd);
+}
+function getHijriLabel(dateStr, year, month, day){
+    var h = getHijriObject(dateStr, year, month, day);
+    if(h && h.m && h.d && h.y){
+        return h.d + ' ' + HIJRI_MONTHS[h.m-1] + ' ' + h.y + ' AH';
+    }
+    return '';
+}
+var current = new Date();
+var viewYear = current.getFullYear();
+var viewMonth = current.getMonth();
+var selectedFromURL = parseInt(getQueryParam('year'));
+if(!isNaN(selectedFromURL)){
+    viewYear = selectedFromURL;
+}
+try{
+    var lsYear = parseInt(localStorage.getItem('selectedYear'));
+    if(!isNaN(lsYear)) viewYear = lsYear;
+} catch(e){ }
+var MILESTONE_MAP = {};
+async function loadMilestonesForYear(y){
+    MILESTONE_MAP = {};
+    try{
+        if(typeof SERVER_MILESTONES !== 'undefined' && SERVER_MILESTONES && Number(SERVER_SELECTED_YEAR) === Number(y)){
+            SERVER_MILESTONES.forEach(function(m){ MILESTONE_MAP[m.date] = m; });
+            try{ localStorage.setItem('milestones_'+String(y), JSON.stringify(SERVER_MILESTONES)); localStorage.setItem('selectedYear', String(y)); }catch(e){}
+            return;
+        }
+        var raw = localStorage.getItem('milestones_'+String(y));
+        if(raw){
+            var arr = JSON.parse(raw);
+            arr.forEach(function(m){ MILESTONE_MAP[m.date] = m; });
+            return;
+        }
+        var resp = await fetch('/api/milestones/?year=' + encodeURIComponent(String(y)), { method: 'GET', credentials: 'same-origin' });
+        if(resp.ok){
+            var payload = await resp.json();
+            if(payload && payload.milestones){
+                payload.milestones.forEach(function(m){ MILESTONE_MAP[m.date] = m; });
+                try{ localStorage.setItem('milestones_'+String(y), JSON.stringify(payload.milestones)); localStorage.setItem('selectedYear', String(y)); }catch(e){}
+                return;
+            }
+        }
+    }catch(e){ console.warn('Unable to load milestones', e); }
+}
+function pad(n){ return n<10 ? '0'+n : String(n); }
+function renderMonth(year, monthIndex){
+    var monthTitle = document.getElementById('monthTitle');
+    var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    monthTitle.textContent = months[monthIndex] + ' ' + year;
+    var datesGrid = document.getElementById('datesGrid');
+    datesGrid.innerHTML = '';
+    var first = new Date(year, monthIndex, 1);
+    var startDay = first.getDay();
+    var daysInMonth = new Date(year, monthIndex+1, 0).getDate();
+    for(var i=0;i<startDay;i++){
+        var blank = document.createElement('div');
+        blank.className = 'date-cell';
+        blank.style.background='transparent';
+        datesGrid.appendChild(blank);
+    }
+    for(var d=1; d<=daysInMonth; d++){
+        (function(day){
+            var cell = document.createElement('div');
+            cell.className = 'date-cell';
+            var num = document.createElement('div'); num.className='date-num'; num.textContent = day;
+            var sub = document.createElement('div'); sub.className='date-sub';
+            var dateStr = year + '-' + pad(monthIndex+1) + '-' + pad(day);
+            sub.textContent = getHijriLabel(dateStr, year, monthIndex+1, day);
+            if(MILESTONE_MAP[dateStr]){
+                cell.classList.add('milestone');
+                var badge = document.createElement('div');
+                badge.style.marginTop = '8px';
+                badge.innerHTML = '<span style="display:inline-block;background:#ffefc2;color:#8a5f00;padding:4px 6px;border-radius:6px;font-weight:700;font-size:0.8rem">' + MILESTONE_MAP[dateStr].name + '</span>';
+                cell.appendChild(badge);
+                cell.title = MILESTONE_MAP[dateStr].name + ' — ' + MILESTONE_MAP[dateStr].date + ' | Visibility: ' + (MILESTONE_MAP[dateStr].is_visible ? 'Yes' : 'No') + ' (Grade ' + MILESTONE_MAP[dateStr].grade + ')';
+            }
+            cell.appendChild(num); cell.appendChild(sub);
+            cell.addEventListener('click', function(){
+                document.querySelectorAll('.date-cell').forEach(function(el){ el.classList.remove('selected'); });
+                cell.classList.add('selected');
+                onDateClick(year, monthIndex+1, day);
+            });
+            datesGrid.appendChild(cell);
+        })(d);
+    }
+}
+function onDateClick(y,m,d){
+    var gDate = formatGregorian(y,m,d);
+    var dateStr = y + '-' + pad(m) + '-' + pad(d);
+    var hijri = getHijriObject(dateStr, y, m, d);
+    var prev = new Date(y, m-1, d-1);
+    var cur = new Date(y, m-1, d);
+    var spanText = 'From evening of ' + prev.toDateString() + ' to evening of ' + cur.toDateString();
+    document.getElementById('gDate').textContent = 'Gregorian: ' + gDate;
+    document.getElementById('hDate').textContent = 'Hijri: ' + formatHijri(hijri);
+    document.getElementById('spanInfo').textContent = spanText;
+    var dateStr = y + '-' + pad(m) + '-' + pad(d);
+    if(MILESTONE_MAP[dateStr]){
+        var mObj = MILESTONE_MAP[dateStr];
+        var infoBox = document.getElementById('infoBox');
+        var linksHTML = '\n            <div style="margin-top:10px"><a href="' + mObj.mooncalc_url + '" target="_blank" style="margin-right:10px;color:#fff;font-weight:700">🌙 View Moon Track</a> <a href="' + mObj.suncalc_url + '" target="_blank" style="color:#fff;font-weight:700">☀️ View Sun Track</a></div>';
+        if(!document.getElementById('milestoneLinks')){
+            var div = document.createElement('div'); div.id = 'milestoneLinks'; div.innerHTML = linksHTML; infoBox.appendChild(div);
+        } else {
+            document.getElementById('milestoneLinks').innerHTML = linksHTML;
+        }
+    }
+}
+function renderMini(){
+    var el = document.getElementById('miniMonth');
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var html = '';
+    for(var i=0;i<12;i++){
+        html += '<button onclick="(function(){ viewMonth=' + i + '; renderMonth(viewYear, viewMonth); })()" style="margin:4px; padding:6px 8px; border-radius:6px; border:none; background:rgba(255,255,255,0.12); color:#fff; cursor:pointer">'+months[i]+'</button>';
+    }
+    el.innerHTML = html;
+}
+var style = document.createElement('style');
+style.innerHTML = '.milestone{ box-shadow: 0 6px 18px rgba(255,160,0,0.12); border: 1px solid rgba(255,160,0,0.15); background: linear-gradient(180deg,#fffaf0,#fff5e6);} .date-cell .date-num{font-size:1.05rem}';
+document.head.appendChild(style);
+async function initCalendar(){
+    await loadMilestonesForYear(viewYear);
+    renderMonth(viewYear, viewMonth);
+    renderMini();
+}
+initCalendar();
+document.getElementById('prev').addEventListener('click', async function(){
+    viewMonth--; if(viewMonth<0){ viewMonth=11; viewYear--; await loadMilestonesForYear(viewYear); }
+    renderMonth(viewYear, viewMonth);
+});
+document.getElementById('next').addEventListener('click', async function(){
+    viewMonth++; if(viewMonth>11){ viewMonth=0; viewYear++; await loadMilestonesForYear(viewYear); }
+    renderMonth(viewYear, viewMonth);
+});
+</script>
+{% endblock %}
