@@ -6,7 +6,7 @@ Optimized for high-precision celestial monitoring at New Delhi coordinates, the 
 
 ---
 
-## 🏗️ System Flow Architecture
+##  System Flow Architecture
 
 ```text
 [User selects Year via UI] 
