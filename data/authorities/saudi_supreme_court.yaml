@@ -1,0 +1,35 @@
+id: saudi_supreme_court
+name: Saudi Arabia (Supreme Court Announcements)
+country_code: SA
+body_name: Supreme Court of the Kingdom of Saudi Arabia
+decision_type: local_sighting
+primary_criterion: ummalqura
+reference_locations:
+  - name: Makkah al-Mukarramah
+    latitude: 21.4225
+    longitude: 39.8262
+    elevation: 277.0
+    timezone_str: Asia/Riyadh
+  - name: Riyadh / Sudair
+    latitude: 25.6027
+    longitude: 45.6267
+    elevation: 750.0
+    timezone_str: Asia/Riyadh
+  - name: Tumair Observatory
+    latitude: 25.7000
+    longitude: 45.8667
+    elevation: 680.0
+    timezone_str: Asia/Riyadh
+dhul_hijjah_rule: follow_makkah
+sect: sunni
+requires_naked_eye: false
+optical_aid_allowed: true
+min_confidence_for_sighting: 0.15
+description: >
+  Official crescent sighting announcements for Ramadan, Shawwal (Eid al-Fitr),
+  and Dhul Hijjah (Hajj/Eid al-Adha). While formally a sighting-based body, the Court
+  frequently accepts witness reports when the Moon sets after sunset (lag > 0),
+  even if optical visibility models deem it marginal or difficult.
+official_sources:
+  - https://www.spa.gov.sa
+  - https://laws.boe.gov.sa

@@ -1,0 +1,34 @@
+id: egypt_dar_al_ifta
+name: Egypt (Dar al-Ifta)
+country_code: EG
+body_name: Dar al-Ifta al-Misriyyah
+decision_type: local_sighting
+primary_criterion: odeh
+reference_locations:
+  - name: Cairo / Muqattam
+    latitude: 30.0444
+    longitude: 31.2357
+    elevation: 23.0
+    timezone_str: Africa/Cairo
+  - name: Aswan (Southern EG)
+    latitude: 24.0889
+    longitude: 32.8998
+    elevation: 108.0
+    timezone_str: Africa/Cairo
+  - name: Toshka / Halayeb
+    latitude: 22.5000
+    longitude: 31.5000
+    elevation: 180.0
+    timezone_str: Africa/Cairo
+dhul_hijjah_rule: follow_makkah
+sect: sunni
+requires_naked_eye: false
+optical_aid_allowed: true
+min_confidence_for_sighting: 0.40
+description: >
+  Combines astronomical calculation with legal field sighting. The legal rule requires that
+  the Moon sets after the Sun anywhere within Egyptian territory. Visual sighting committees
+  (7 official teams) are dispatched, and visual claims are rejected if astronomical calculations
+  prove the Moon set before the Sun.
+official_sources:
+  - https://www.dar-alifta.org

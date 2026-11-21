@@ -1,0 +1,29 @@
+id: turkey_diyanet
+name: Turkey (Diyanet)
+country_code: TR
+body_name: Diyanet İşleri Başkanlığı (Presidency of Religious Affairs)
+decision_type: calculation
+primary_criterion: istanbul_2015
+reference_locations:
+  - name: Ankara
+    latitude: 39.9334
+    longitude: 32.8597
+    elevation: 938.0
+    timezone_str: Europe/Istanbul
+  - name: Istanbul
+    latitude: 41.0082
+    longitude: 28.9784
+    elevation: 39.0
+    timezone_str: Europe/Istanbul
+dhul_hijjah_rule: follow_makkah
+sect: sunni
+requires_naked_eye: false
+optical_aid_allowed: false
+min_confidence_for_sighting: 0.0
+description: >
+  Follows astronomical calculation under the Istanbul 2015 / 2016 International Hijri Calendar
+  Unity Congress resolution. A crescent is considered valid if anywhere on Earth it reaches
+  an altitude of at least 5° and an elongation of at least 8° at sunset.
+official_sources:
+  - https://www.diyanet.gov.tr
+  - https://vakithesaplama.diyanet.gov.tr

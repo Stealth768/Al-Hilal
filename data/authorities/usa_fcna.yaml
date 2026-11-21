@@ -1,0 +1,29 @@
+id: usa_fcna
+name: North America (Fiqh Council of North America / ISNA)
+country_code: US
+body_name: Fiqh Council of North America (FCNA)
+decision_type: calculation
+primary_criterion: istanbul_2015
+reference_locations:
+  - name: Washington DC / Plainfield IN
+    latitude: 38.9072
+    longitude: -77.0369
+    elevation: 20.0
+    timezone_str: America/New_York
+  - name: Makkah (Point of Reference for Fajr cut-off)
+    latitude: 21.4225
+    longitude: 39.8262
+    elevation: 277.0
+    timezone_str: Asia/Riyadh
+dhul_hijjah_rule: follow_makkah
+sect: sunni
+requires_naked_eye: false
+optical_aid_allowed: false
+min_confidence_for_sighting: 0.0
+description: >
+  Adopted the European Council for Fatwa and Research (ECFR) standard in 2006:
+  Conjunction must occur before sunset at Makkah, and the crescent must satisfy
+  elongation >= 8° and altitude >= 5° somewhere on Earth before Fajr in Makkah.
+official_sources:
+  - https://fiqhcouncil.org
+  - https://isna.net

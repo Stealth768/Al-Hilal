@@ -1,0 +1,34 @@
+id: indonesia_kemenag
+name: Indonesia (Kemenag / MABIMS)
+country_code: ID
+body_name: Kementerian Agama Republik Indonesia (Kemenag)
+decision_type: regional_sighting
+primary_criterion: mabims_2021
+reference_locations:
+  - name: Jakarta / Pelabuhan Ratu
+    latitude: -6.9833
+    longitude: 106.5500
+    elevation: 20.0
+    timezone_str: Asia/Jakarta
+  - name: Banda Aceh (Westernmost ID)
+    latitude: 5.5483
+    longitude: 95.3238
+    elevation: 10.0
+    timezone_str: Asia/Jakarta
+  - name: Kupang (Eastern/Southern ID)
+    latitude: -10.1772
+    longitude: 123.6070
+    elevation: 35.0
+    timezone_str: Asia/Makassar
+dhul_hijjah_rule: local_sighting
+sect: sunni
+requires_naked_eye: false
+optical_aid_allowed: true
+min_confidence_for_sighting: 0.50
+description: >
+  Official body for the world's largest Muslim-majority nation. Applies MABIMS 2021
+  neo-criteria (Imkanur Rukyah): Moon altitude >= 3.0° and elongation >= 6.4° at sunset.
+  Decision is finalized at the annual Isbat Council (Sidang Isbat) with rukyatul hilal verification.
+official_sources:
+  - https://kemenag.go.id
+  - https://bimasislam.kemenag.go.id

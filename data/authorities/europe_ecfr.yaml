@@ -1,0 +1,33 @@
+id: europe_ecfr
+name: Europe (European Council for Fatwa and Research)
+country_code: EU
+body_name: European Council for Fatwa and Research (ECFR)
+decision_type: calculation
+primary_criterion: istanbul_2015
+reference_locations:
+  - name: Dublin (ECFR Headquarters)
+    latitude: 53.3498
+    longitude: -6.2603
+    elevation: 20.0
+    timezone_str: Europe/Dublin
+  - name: Paris
+    latitude: 48.8566
+    longitude: 2.3522
+    elevation: 35.0
+    timezone_str: Europe/Paris
+  - name: Frankfurt
+    latitude: 50.1109
+    longitude: 8.6821
+    elevation: 112.0
+    timezone_str: Europe/Berlin
+dhul_hijjah_rule: follow_makkah
+sect: sunni
+requires_naked_eye: false
+optical_aid_allowed: false
+min_confidence_for_sighting: 0.0
+description: >
+  Calculates the Hijri calendar deterministically according to the Istanbul 2015 consensus:
+  Conjunction must occur anywhere on Earth, with crescent elongation >= 8° and altitude >= 5°
+  somewhere on Earth before Fajr time in Makkah.
+official_sources:
+  - https://e-cfr.org

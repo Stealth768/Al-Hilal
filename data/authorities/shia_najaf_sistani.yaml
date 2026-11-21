@@ -1,0 +1,29 @@
+id: shia_najaf_sistani
+name: Iraq / International Shia (Office of Ayatollah Sistani)
+country_code: IQ
+body_name: Office of Grand Ayatollah Sayyid Ali al-Husseini al-Sistani
+decision_type: local_sighting
+primary_criterion: yallop
+reference_locations:
+  - name: Najaf al-Ashraf
+    latitude: 31.9959
+    longitude: 44.3148
+    elevation: 60.0
+    timezone_str: Asia/Baghdad
+  - name: Karbala
+    latitude: 32.6160
+    longitude: 44.0249
+    elevation: 30.0
+    timezone_str: Asia/Baghdad
+dhul_hijjah_rule: local_sighting
+sect: shia
+requires_naked_eye: true
+optical_aid_allowed: false
+min_confidence_for_sighting: 0.70
+description: >
+  Follows the rulings of Ayatollah Sistani: requires unassisted naked-eye sighting.
+  Telescope sightings are explicitly not sufficient. Sighting in one city applies to
+  other regions sharing a part of the night where the crescent was sighted in the east
+  or on shared horizons. Observes Shia-specific dates (e.g. Mawlid on 17th Rabi' al-Awwal).
+official_sources:
+  - https://www.sistani.org

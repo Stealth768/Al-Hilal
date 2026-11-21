@@ -1,0 +1,39 @@
+id: morocco_habous
+name: Morocco (Habous / Awqaf)
+country_code: MA
+body_name: Ministère des Habous et des Affaires Islamiques
+decision_type: local_sighting
+primary_criterion: odeh
+reference_locations:
+  - name: Rabat
+    latitude: 34.0209
+    longitude: -6.8416
+    elevation: 53.0
+    timezone_str: Africa/Casablanca
+  - name: Marrakech
+    latitude: 31.6295
+    longitude: -7.9811
+    elevation: 468.0
+    timezone_str: Africa/Casablanca
+  - name: Oujda (Eastern MA)
+    latitude: 34.6814
+    longitude: -1.9086
+    elevation: 470.0
+    timezone_str: Africa/Casablanca
+  - name: Dakhla (Southern MA)
+    latitude: 23.7136
+    longitude: -15.9355
+    elevation: 11.0
+    timezone_str: Africa/Casablanca
+dhul_hijjah_rule: local_sighting
+sect: sunni
+requires_naked_eye: true
+optical_aid_allowed: false
+min_confidence_for_sighting: 0.70
+description: >
+  Renowned globally among astronomers for having the most rigorous naked-eye crescent observation
+  network in the world, with over 200 observation committees nationwide coordinating with
+  the Royal Armed Forces. Rejects optical aid claims if naked-eye sighting is impossible.
+  Uncompromised 29 vs 30 day istikmal rules.
+official_sources:
+  - https://www.habous.gov.ma

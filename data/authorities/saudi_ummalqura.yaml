@@ -1,0 +1,24 @@
+id: saudi_ummalqura
+name: Saudi Arabia (Umm al-Qura Calendar)
+country_code: SA
+body_name: King Abdulaziz City for Science and Technology (KACST)
+decision_type: calculation
+primary_criterion: ummalqura
+reference_locations:
+  - name: Makkah al-Mukarramah
+    latitude: 21.4225
+    longitude: 39.8262
+    elevation: 277.0
+    timezone_str: Asia/Riyadh
+dhul_hijjah_rule: follow_makkah
+sect: general
+requires_naked_eye: false
+optical_aid_allowed: false
+min_confidence_for_sighting: 0.0
+description: >
+  Official civil and religious calendar of the Kingdom of Saudi Arabia.
+  Deterministic rule: Geocentric conjunction must occur before sunset in Makkah,
+  and the Moon must set after the Sun in Makkah (lag time > 0).
+official_sources:
+  - https://www.ummulqura.org.sa
+  - https://kacst.gov.sa

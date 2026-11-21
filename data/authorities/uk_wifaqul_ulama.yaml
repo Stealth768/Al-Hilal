@@ -1,0 +1,33 @@
+id: uk_wifaqul_ulama
+name: United Kingdom (Wifaqul Ulama)
+country_code: GB
+body_name: Wifaqul Ulama UK
+decision_type: regional_sighting
+primary_criterion: yallop
+reference_locations:
+  - name: London
+    latitude: 51.5074
+    longitude: -0.1278
+    elevation: 11.0
+    timezone_str: Europe/London
+  - name: Birmingham
+    latitude: 52.4862
+    longitude: -1.8904
+    elevation: 140.0
+    timezone_str: Europe/London
+  - name: Morocco (Nearest Muslim country point of reference)
+    latitude: 34.0209
+    longitude: -6.8416
+    elevation: 53.0
+    timezone_str: Africa/Casablanca
+dhul_hijjah_rule: local_sighting
+sect: sunni
+requires_naked_eye: true
+optical_aid_allowed: false
+min_confidence_for_sighting: 0.65
+description: >
+  Prominent UK moon sighting umbrella organization. Follows local UK sighting first;
+  if the Moon is not sighted in the UK (common due to cloud cover), it relies on verified
+  sightings from the nearest Muslim countries sharing a night (primarily Morocco and South Africa).
+official_sources:
+  - https://www.wifaqululama.co.uk

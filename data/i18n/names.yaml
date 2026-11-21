@@ -1,0 +1,79 @@
+# Al Hilal — Islamic calendar names in Arabic and transliteration.
+# Used via i18n keys in all output; UI rendering is deferred to a later milestone.
+# Source: Classical Arabic; transliteration follows ALA-LC romanization.
+
+hijri_months:
+  1:  { ar: "مُحَرَّم",   en: "Muharram" }
+  2:  { ar: "صَفَر",      en: "Safar" }
+  3:  { ar: "رَبِيعُ الأَوَّل",  en: "Rabi' al-Awwal" }
+  4:  { ar: "رَبِيعُ الثَّانِي", en: "Rabi' al-Thani" }
+  5:  { ar: "جُمَادَى الأُولَى", en: "Jumada al-Ula" }
+  6:  { ar: "جُمَادَى الآخِرَة", en: "Jumada al-Akhira" }
+  7:  { ar: "رَجَب",      en: "Rajab" }
+  8:  { ar: "شَعْبَان",   en: "Sha'ban" }
+  9:  { ar: "رَمَضَان",   en: "Ramadan" }
+  10: { ar: "شَوَّال",    en: "Shawwal" }
+  11: { ar: "ذُو القَعْدَة", en: "Dhul Qa'dah" }
+  12: { ar: "ذُو الحِجَّة", en: "Dhul Hijjah" }
+
+islamic_events:
+  islamic_new_year:
+    ar: "رَأسُ السَّنَة الهِجْرِيَّة"
+    en: "Islamic New Year"
+    hijri_month: 1
+    hijri_day: 1
+  ashura:
+    ar: "عَاشُورَاء"
+    en: "Ashura"
+    hijri_month: 1
+    hijri_day: 10
+    # Note: observed on 9th and/or 10th by different scholarly positions
+  mawlid_sunni:
+    ar: "المَوْلِدُ النَّبَوِيّ"
+    en: "Mawlid al-Nabi (Sunni)"
+    hijri_month: 3
+    hijri_day: 12
+    sect: sunni
+  mawlid_shia:
+    ar: "المَوْلِدُ النَّبَوِيّ"
+    en: "Mawlid al-Nabi (Shia)"
+    hijri_month: 3
+    hijri_day: 17
+    sect: shia
+  isra_miraj:
+    ar: "الإِسْرَاءُ وَالمِعْرَاج"
+    en: "Isra and Mi'raj"
+    hijri_month: 7
+    hijri_day: 27
+  shab_e_barat:
+    ar: "لَيْلَةُ البَرَاءَة"
+    en: "Shab-e-Barat (Night of Bara'at)"
+    hijri_month: 8
+    hijri_day: 15
+    note: "Observed on the night of the 14th (evening before 15th Sha'ban)"
+  ramadan_start:
+    ar: "بِدَايَةُ رَمَضَان"
+    en: "First of Ramadan"
+    hijri_month: 9
+    hijri_day: 1
+  laylat_al_qadr_window:
+    ar: "لَيْلَةُ القَدْر"
+    en: "Laylat al-Qadr (window)"
+    hijri_month: 9
+    hijri_days: [21, 23, 25, 27, 29]
+    note: "Odd nights of last 10 days; 27th is most widely observed"
+  eid_al_fitr:
+    ar: "عِيدُ الفِطْر"
+    en: "Eid al-Fitr"
+    hijri_month: 10
+    hijri_day: 1
+  day_of_arafah:
+    ar: "يَوْمُ عَرَفَة"
+    en: "Day of Arafah"
+    hijri_month: 12
+    hijri_day: 9
+  eid_al_adha:
+    ar: "عِيدُ الأَضْحَى"
+    en: "Eid al-Adha"
+    hijri_month: 12
+    hijri_day: 10

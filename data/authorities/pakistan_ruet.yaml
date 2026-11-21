@@ -1,0 +1,44 @@
+id: pakistan_ruet
+name: Pakistan (Central Ruet-e-Hilal Committee)
+country_code: PK
+body_name: Central Ruet-e-Hilal Committee of Pakistan
+decision_type: local_sighting
+primary_criterion: odeh
+reference_locations:
+  - name: Islamabad
+    latitude: 33.6844
+    longitude: 73.0479
+    elevation: 540.0
+    timezone_str: Asia/Karachi
+  - name: Karachi
+    latitude: 24.8607
+    longitude: 67.0011
+    elevation: 10.0
+    timezone_str: Asia/Karachi
+  - name: Peshawar
+    latitude: 34.0151
+    longitude: 71.5249
+    elevation: 359.0
+    timezone_str: Asia/Karachi
+  - name: Quetta
+    latitude: 30.1798
+    longitude: 66.9750
+    elevation: 1680.0
+    timezone_str: Asia/Karachi
+  - name: Pasni / Gwadar (Coastal Balochistan)
+    latitude: 25.2631
+    longitude: 63.4692
+    elevation: 10.0
+    timezone_str: Asia/Karachi
+dhul_hijjah_rule: local_sighting
+sect: sunni
+requires_naked_eye: true
+optical_aid_allowed: true
+min_confidence_for_sighting: 0.60
+description: >
+  Operates under the Ministry of Religious Affairs with zonal committees in provincial capitals.
+  Relies strictly on authenticated testimony (shahadah) from credible witnesses across Pakistan,
+  assisted by technical advisors from the Pakistan Meteorological Department (PMD) and SUPARCO.
+official_sources:
+  - https://mora.gov.pk
+  - https://pmd.gov.pk

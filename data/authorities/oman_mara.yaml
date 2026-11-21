@@ -1,0 +1,33 @@
+id: oman_mara
+name: Oman (Ministry of Endowments)
+country_code: OM
+body_name: Ministry of Endowments and Religious Affairs (MARA), Sultanate of Oman
+decision_type: local_sighting
+primary_criterion: odeh
+reference_locations:
+  - name: Muscat
+    latitude: 23.5880
+    longitude: 58.3829
+    elevation: 15.0
+    timezone_str: Asia/Muscat
+  - name: Salalah (Southern OM)
+    latitude: 17.0151
+    longitude: 54.0924
+    elevation: 20.0
+    timezone_str: Asia/Muscat
+  - name: Jabal Shams Observatory
+    latitude: 23.2372
+    longitude: 57.2644
+    elevation: 3000.0
+    timezone_str: Asia/Muscat
+dhul_hijjah_rule: local_sighting
+sect: general
+requires_naked_eye: false
+optical_aid_allowed: true
+min_confidence_for_sighting: 0.65
+description: >
+  Combines an advanced nationwide network of 25 automated astronomical observatories
+  with certified field witnesses. Known for high scientific precision and rejecting
+  erroneous claims that violate astronomical limits.
+official_sources:
+  - https://www.mara.gov.om
